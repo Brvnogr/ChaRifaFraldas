@@ -1,5 +1,6 @@
-const SPREADSHEET_ID = " ID_AQUI "; // opcional: cole o ID da planilha aqui. Se vazio, usa a planilha ativa
+const SPREADSHEET_ID = " ID_PLANILHA"; // opcional: cole o ID da planilha aqui. Se vazio, usa a planilha ativa
 const SHEET_NAME = 'Reservas';
+const FAVICON_URL = "https://raw.githubusercontent.com/Brvnogr/ChaRifaFraldas/main/favicon.ico"; // ícone que aparecerá no navegador
 
 
 function getSpreadsheet() {
@@ -9,7 +10,8 @@ return SPREADSHEET_ID ? SpreadsheetApp.openById(SPREADSHEET_ID) : SpreadsheetApp
 
 function doGet(e) {
 return HtmlService.createHtmlOutputFromFile('Index')
-.setTitle('Chá Rifa de Fraldas')
+.setTitle('Chá Rifa da Elise')
+.setFaviconUrl(FAVICON_URL)
 .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
 }
 
