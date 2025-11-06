@@ -20,3 +20,6 @@ Este arquivo é um **exemplo de convite** utilizado para uso com o *Google Sheet
 
 Este modelo pode ser adaptado para outros eventos semelhantes, como chá de bebê, rifa solidária ou arrecadações criativas.  
 A imagem pode ser usada como plano de fundo em páginas HTML, impressa como convite físico ou compartilhada digitalmente.
+
+## 🌎 Exemplo do Web App Implantado
+![Exemplo do Projeto](https://raw.githubusercontent.com/Brvnogr/ChaRifaFraldas/main/exemplo.png)
