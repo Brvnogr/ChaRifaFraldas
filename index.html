@@ -47,7 +47,7 @@
       }
 
       /* Imagem de fundo */
-      .faixa {
+      .fundo {
         background-image: url("https://raw.githubusercontent.com/Brvnogr/ChaRifaFraldas/main/fundo.png");
         background-repeat: no-repeat;
         background-size: cover;
@@ -61,7 +61,7 @@
         box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); /* borda sombreada */
       }
       /* Quadro branco semi-transparente */
-      .faixa::before {
+      .fundo::before {
         content: "";
         position: absolute;
         top: 90px;
@@ -73,7 +73,7 @@
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* sombra suave */
         z-index: 1; /* fica na frente do fundo */
       }
-      .faixa > * {
+      .fundo > * {
         /* garante que todo o conteúdo fique acima desta camada */
         position: relative;
         z-index: 2;
@@ -354,7 +354,7 @@
 
   <body>
     <!-- Fundo -->
-    <div class="faixa">
+    <div class="fundo">
       <br /><!-- Título -->
       <div class="main-title">Chá Rifa da Elise</div>
 
@@ -402,11 +402,11 @@
       <div class="date-container">
         <div class="date-box">
           <p>Entrega até</p>
-          <p class="item-text">21/11</p>
+          <p class="item-text">15/11</p>
         </div>
         <div class="date-box">
           <p>Sorteio dia</p>
-          <p class="item-text">22/11 18h</p>
+          <p class="item-text">22/11 17h</p>
         </div>
       </div>
 
@@ -438,7 +438,7 @@
           class="footer-img"
         />
         <img
-          src="https://raw.githubusercontent.com/Brvnogr/ChaRifaFraldas/main/bee2.png"
+          src="https://raw.githubusercontent.com/Brvnogr/ChaRifaFraldas/main/bee.png"
           alt="Ilustração de abelha voando"
           class="footer-img bee-float"
         />
