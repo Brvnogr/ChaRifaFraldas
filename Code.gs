@@ -67,7 +67,7 @@ function reserveNumber(payload) {
       payload.endereco || ''
     ]);
 
-    return {success:true, message:'Número escolhido com sucesso. Boa sorte!'};
+    return {success:true, message:'Gravado com sucesso! Muito obrigado.'};
 
   } catch (e) {
     return {success:false, message:'Erro interno: ' + e.message};
