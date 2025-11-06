@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chá Rifa da Elise</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Delius&family=Dongle:wght@700&family=Satisfy&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        background-color: #fff2c6; /* cor de fundo amarela */
+        font-family: "Delius", cursive;
+        font-size: 18px;
+        font-weight: bold;
+        line-height: 1.8;
+        text-align: center;
+        overflow-x: hidden;
+      }
+
+      /* Título principal */
+      .main-title {
+        font-family: "Satisfy", cursive;
+        font-size: 48px;
+        font-weight: bold;
+        text-align: center;
+        color: #f2d784; /* amarelo claro */
+        text-shadow: 2px 3px 0 #493e3e; /* contorno cor marrom  */
+      }
+
+      /* Título 2 */
+      .title {
+        font-size: 20px;
+        margin-bottom: 15px;
+      }
+
+      /* Conteúdo */
+      .text {
+        margin: 0 auto 20px;
+        max-width: 450px;
+        text-align: center;
+        font-size: 18px;
+      }
+
+      /* Imagem de fundo */
+      .faixa {
+        background-image: url("https://raw.githubusercontent.com/Brvnogr/ChaRifaFraldas/main/fundo.png");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: top center;
+        position: relative;
+        z-index: 0;
+        height: 1700px;
+        width: 600px;
+        margin: 0 auto;
+        padding-top: 50px; /* margem superior */
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); /* borda sombreada */
+      }
+      /* Quadro branco semi-transparente */
+      .faixa::before {
+        content: "";
+        position: absolute;
+        top: 90px;
+        left: 50px;
+        right: 50px;
+        bottom: 265px;
+        background: rgba(255, 255, 255, 0.5); /* branco com 50% de opacidade */
+        border-radius: 20px; /* cantos arredondados */
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* sombra suave */
+        z-index: 1; /* fica na frente do fundo */
+      }
+      .faixa > * {
+        /* garante que todo o conteúdo fique acima desta camada */
+        position: relative;
+        z-index: 2;
+      }
+
+      .lista-container {
+        max-width: 250px;
+        margin: 0 auto 20px; /* centralizado */
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+      }
+
+      .item {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        line-height: 0.5;
+      }
+
+      .heart-icon {
+        color: #f2d784;
+        font-family: "Dongle", sans-serif;
+        font-size: 55px;
+        position: relative;
+        margin-right: 20px;
+        top: 3px; /* ↓ ajusta alinhamento vertical do coração */
+      }
+
+      .item-text {
+        font-size: 24px;
+        color: #493e3e;
+      }
+
+      /* Seção prêmio*/
+      .premio-container {
+        position: relative;
+        display: inline-block; /* mantém o tamanho da imagem */
+        text-align: center;
+        transition: transform 0.3s ease; /* transição suave */
+      }
+
+      .premio-container:hover {
+        transform: scale(1.2); /* ← efeito de ampliar */
+      }
+
+      .premio-img {
+        width: 100%; /* ou defina uma largura fixa, ex: 200px */
+        display: block;
+      }
+
+      .premio-text {
+        position: absolute;
+        top: 18%;
+        left: 50%;
+        transform: translate(-50%, -50%); /* centraliza o texto */
+        font-size: 54px;
+        font-family: "Dongle", sans-serif;
+        color: white; /* cor branca */
+        white-space: nowrap; /* ← evita quebra de linha */
+        text-shadow: 2px 3px 0 #493e3e;
+      }
+
+      /* Datas */
+      .date-container {
+        display: flex;
+        gap: 40px;
+        justify-content: center;
+        margin-bottom: 20px;
+      }
+
+      .date-box {
+        background: linear-gradient(135deg, #f4d783, #f3d785);
+
+        border-radius: 30px;
+        padding: 0.1rem 0.1rem;
+        text-align: center;
+        line-height: 0.5;
+        box-shadow: 0 4px 15px rgba(244, 215, 131, 0.3);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        min-width: 150px;
+      }
+
+      .date-box:hover {
+        transform: translateY(-10px); /* efeito de flutuar */
+        box-shadow: 0 8px 25px rgba(244, 215, 131, 0.5); /* efeito de sombra */
+      }
+
+      .sorteioLink {
+        background-color: #f4d785;
+        padding: 5px 12px;
+        border-radius: 15px;
+        display: inline-block;
+        cursor: pointer;
+      }
+
+      /* Seção do grid */
+      #gridSection {
+        padding: 0 20px 0;
+        background: transparent;
+        text-align: center;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(10, 1fr); /* 10 colunas */
+        gap: 2px;
+        max-width: 480px;
+        margin: 20px auto 10px;
+        min-height: 390px; /* mantém o espaço fixo durante o refresh */
+      }
+      .grid.blocked {
+        pointer-events: none; /* impede cliques */
+        opacity: 0.5; /* opcional: dá efeito visual de atualização */
+      }
+      .cell {
+        padding: 10px;
+        border-radius: 0px;
+        cursor: pointer;
+        background: #fff;
+        border: 1px solid #fce3ec;
+        transition: 0.2s;
+        font-weight: bold;
+        font-size: 18px;
+      }
+      .cell.available:hover {
+        background: #e0ffe0;
+      }
+      .cell.reserved {
+        background: #ffdddd;
+        color: #999;
+        cursor: not-allowed;
+      }
+
+      /* modal */
+      #formModal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5); /* fundo escuro semi-transparente */
+        justify-content: center;
+        align-items: center;
+      }
+      #formModal .modal-content {
+        background: #fffcf0;
+        padding: 20px;
+        border-radius: 15px;
+        width: 350px;
+        text-align: left;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      }
+      input {
+        font-size: 18px;
+        width: 90%;
+        padding: 12px;
+        margin-bottom: 10px;
+        background: #fff2c6;
+      }
+
+      .checkbox-container {
+        display: flex; /* mantém tudo em linha */
+        gap: 10px; /* espaço entre checkbox e texto */
+        margin: 10px 0 10px; /* espaço de cima e debaixo */
+      }
+
+      .checkbox-container input[type="checkbox"] {
+        width: 22px; /* aumenta o tamanho do checkbox */
+        height: 22px;
+        transform: translateY(2px); /* desce para alinhar com o texto*/
+        cursor: pointer;
+      }
+
+      .pix-info {
+        display: none; /* inicia escondido */
+        width: 280px;
+        margin-bottom: 10px;
+        font-size: 18px;
+        background-color: #f4d684;
+      }
+
+      .button-container {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        text-align: right;
+        margin-top: 10px;
+      }
+      button {
+        font-size: 18px;
+        font-family: "Delius", cursive;
+        font-weight: bold;
+        padding: 10px;
+        border: none;
+        border-radius: 8px;
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+        transition: transform 0.2s, box-shadow 0.2s;
+        cursor: pointer;
+      }
+      #submitBtn {
+        background: #f4d684;
+        color: black;
+        width: 150px;
+      }
+      #cancelBtn {
+        background: #fff9e2;
+        color: black;
+        width: 150px;
+      }
+      #formMsg {
+        margin-top: 10px;
+        font-size: 14px;
+      }
+
+      .help-button button {
+        padding: 6px 12px;
+        font-family: "Delius";
+        font-size: 18px;
+        font-weight: bold;
+        border: none;
+        border-radius: 10px;
+        background: #f4d684;
+        color: black;
+        cursor: pointer;
+      }
+
+      /* Imagens do fim da página */
+      .footer-images {
+        display: flex;
+        justify-content: center;
+        gap: 200px; /* distancia entre a colmeia e a abelha */
+        margin-top: 70px;
+      }
+
+      .footer-img {
+        width: 150px;
+        height: auto;
+      }
+
+      /* Animação de voo da abelha */
+      .bee-float {
+        animation: beeFlight 15s infinite ease-in-out;
+      }
+
+      @keyframes beeFlight {
+        0% {
+          transform: translate(0, 0) rotate(0deg);
+        }
+        12% {
+          transform: translate(-50px, -50px) rotate(8deg);
+        }
+        25% {
+          transform: translate(-100px, -3px) rotate(-4deg);
+        }
+        37% {
+          transform: translate(-50px, -50px) rotate(5deg);
+        }
+        50% {
+          transform: translate(-40px, -10px) rotate(-7deg);
+        }
+        62% {
+          transform: translate(-20px, 0px) rotate(5deg);
+        }
+        75% {
+          transform: translate(-30px, -10px) rotate(0deg);
+        }
+        87% {
+          transform: translate(-10px, 20px) rotate(3deg);
+        }
+        100% {
+          transform: translate(0, 0) rotate(0deg);
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Fundo -->
+    <div class="faixa">
+      <br /><!-- Título -->
+      <div class="main-title">Chá Rifa da Elise</div>
+
+      <!-- Descrição -->
+      <div class="text">
+        Nossa menina está chegando, então é hora de comemorarmos sua chegada,
+        pensando nisto, papai e mamãe resolveram criar este Chá Rifa. Ao
+        participar, você garante um número para o sorteio e ainda nos ajuda a
+        preparar o enxoval!
+      </div>
+
+      <!-- Prêmio -->
+      <div class="premio-container">
+        <img
+          src="https://raw.githubusercontent.com/Brvnogr/ChaRifaFraldas/main/premio.png"
+          alt="Prêmio"
+          class="premio-img"
+        />
+        <div class="premio-text">♥ Prêmio ♥</div>
+        <div class="main-title">R$ 200,00</div>
+      </div>
+
+      <!-- Lista de Itens -->
+      <div class="title">Escolha um número de 1 a 70</div>
+      <div class="lista-container">
+        <div class="item premio-container">
+          <span class="heart-icon">♥</span>
+          <span class="item-text">01 a 10 Fralda RN</span>
+        </div>
+        <div class="item premio-container">
+          <span class="heart-icon">♥</span>
+          <span class="item-text">11 a 30 Fralda P</span>
+        </div>
+        <div class="item premio-container">
+          <span class="heart-icon">♥</span>
+          <span class="item-text">31 a 70 Fralda M</span>
+        </div>
+      </div>
+
+      <!-- Informação-->
+      <div class="text">
+        Combine a entrega ou deixe um endereço que iremos buscar mas se preferir
+        também, aceitamos Pix no valor de um pacote de fraldas!
+      </div>
+      <div class="date-container">
+        <div class="date-box">
+          <p>Entrega até</p>
+          <p class="item-text">21/11</p>
+        </div>
+        <div class="date-box">
+          <p>Sorteio dia</p>
+          <p class="item-text">22/11 18h</p>
+        </div>
+      </div>
+
+      <!-- Link do sorteio -->
+      <div class="text sorteioLink">
+        <a href="#" id="sorteioLink">Clique aqui para assistir o sorteio:</a>
+      </div>
+
+      <!-- Seção do grid -->
+      <section id="gridSection">
+        <div class="title">Selecione um número:</div>
+        <div id="grid" class="grid">
+          <p>Carregando...</p>
+        </div>
+
+        <!-- Botão para ajudar sem escolher número -->
+        <div class="help-button">
+          <button onclick="openModal('')">
+            Quero ajudar sem escolher número
+          </button>
+        </div>
+      </section>
+
+      <!-- Imagens do rodapé -->
+      <div class="footer-images">
+        <img
+          src="https://raw.githubusercontent.com/Brvnogr/ChaRifaFraldas/main/colmeia.png"
+          alt="Imagem decorativa de colmeia"
+          class="footer-img"
+        />
+        <img
+          src="https://raw.githubusercontent.com/Brvnogr/ChaRifaFraldas/main/bee2.png"
+          alt="Ilustração de abelha voando"
+          class="footer-img bee-float"
+        />
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <template id="modalTpl">
+      <div id="formModal">
+        <div class="modal-content">
+          <h3>
+            <span id="modalTitle"></span> <span id="selectedNumber"></span>
+          </h3>
+          <label>Seu Nome:</label>
+          <input id="nome" type="text" />
+          <label>Seu Celular/WhatsApp:</label>
+          <input id="telefone" type="text" />
+          <div class="checkbox-container">
+            <input type="checkbox" id="pixCheckbox" />
+            <label for="pixCheckbox">Vou fazer Pix</label>
+          </div>
+          <div id="pixInfo" class="pix-info">
+            Chave Pix: 15988083855 | Nubank
+          </div>
+          <label>Endereço para retirar o pacote:</label>
+          <input id="endereco" type="text" />
+          <div class="button-container">
+            <button id="cancelBtn">Cancelar</button>
+            <button id="submitBtn">Enviar</button>
+          </div>
+          <div id="formMsg"></div>
+        </div>
+      </div>
+    </template>
+
+    <script>
+      let reserved = {};
+      const grid = document.getElementById("grid");
+
+      function makeGrid() {
+        grid.innerHTML = "";
+        for (let i = 1; i <= 70; i++) {
+          // 70 números
+          const d = document.createElement("div");
+          d.className = "cell";
+          d.textContent = i;
+          d.dataset.num = i;
+          if (reserved[String(i)]) d.classList.add("reserved");
+          else d.classList.add("available");
+          d.addEventListener("click", onCellClick);
+          grid.appendChild(d);
+        }
+      }
+
+      function onCellClick(e) {
+        const num = e.currentTarget.dataset.num;
+        if (reserved[num]) return;
+        openModal(num);
+      }
+
+      // modal setup
+      const tpl = document.getElementById("modalTpl");
+      document.body.appendChild(tpl.content.cloneNode(true));
+
+      const modal = document.getElementById("formModal");
+      const modalTitle = document.getElementById("modalTitle");
+      const selectedNumber = document.getElementById("selectedNumber");
+      const nome = document.getElementById("nome");
+      const telefone = document.getElementById("telefone");
+      const pixCheckbox = document.getElementById("pixCheckbox");
+      const pixInfo = document.getElementById("pixInfo");
+      const endereco = document.getElementById("endereco");
+      const submitBtn = document.getElementById("submitBtn");
+      const cancelBtn = document.getElementById("cancelBtn");
+      const formMsg = document.getElementById("formMsg");
+
+      // Link do sorteio
+      const link = document.getElementById("sorteioLink");
+      const videoDisponivel = false; // altere para true quando o vídeo estiver pronto
+      const urlVideo = "LINK_DO_VIDEO_AQUI";
+
+      link.addEventListener("click", function (e) {
+        e.preventDefault(); // evita ir para algum lugar
+        if (videoDisponivel) {
+          window.open(urlVideo, "_blank"); // abre o vídeo em nova aba
+        } else {
+          alert("O vídeo do sorteio só será realizado na data do sorteio.");
+        }
+      });
+
+      // Listener para o checkbox Pix
+      pixCheckbox.addEventListener("change", () => {
+        if (pixCheckbox.checked) {
+          endereco.value = "Transferência Pix"; // preenche o campo endereço
+          endereco.disabled = true; // desabilita o campo endereço
+          pixInfo.style.display = "block"; // mostra a chave Pix
+        } else {
+          endereco.value = ""; // limpa o campo endereço
+          endereco.disabled = false; // reabilita o campo endereço
+          pixInfo.style.display = "none"; // esconde a chave Pix
+        }
+      });
+
+      // Cancelar modal
+      cancelBtn.onclick = () => closeModal();
+
+      // Abrir modal
+      function openModal(num) {
+        if (num === "") {
+          modalTitle.textContent = "Ajudar com um pacote de fralda";
+          selectedNumber.textContent = "";
+        } else {
+          modalTitle.textContent = "Escolher número";
+          selectedNumber.textContent = num;
+        }
+
+        //Reset campos
+        nome.value = "";
+        telefone.value = "";
+        pixCheckbox.checked = false;
+        pixInfo.style.display = "none";
+        endereco.value = "";
+        endereco.disabled = false;
+        formMsg.textContent = "";
+
+        modal.style.display = "flex";
+
+        submitBtn.onclick = () => submitReservation(num);
+      }
+
+      // Fechar modal
+      function closeModal() {
+        modal.style.display = "none";
+      }
+
+      // Atualizar modal
+      function refreshReserved() {
+        grid.classList.add("blocked"); // bloqueio ao atualizar
+        google.script.run
+          .withSuccessHandler(function (r) {
+            reserved = r || {};
+            makeGrid();
+            grid.classList.remove("blocked"); //volta ao normal
+          })
+          .withFailureHandler(function (err) {
+            console.error("Erro ao carregar dados:", err);
+            grid.classList.remove("blocked");
+            grid.innerHTML =
+              "<p style='color:red;'>Erro ao carregar dados.</p>";
+          })
+          .getReservedNumbers();
+      }
+
+      // Envio dos dados
+      function submitReservation(num) {
+        if (
+          !nome.value.trim() ||
+          !telefone.value.trim() ||
+          !endereco.value.trim()
+        ) {
+          formMsg.style.color = "red";
+          formMsg.textContent = "Por favor, preencha todos os campos.";
+          return;
+        }
+        const payload = {
+          numero: num, // pode ser vazio
+          nome: nome.value.trim(),
+          telefone: telefone.value.trim(),
+          endereco: endereco.value.trim(),
+        };
+        submitBtn.disabled = true;
+        google.script.run
+          .withSuccessHandler(function (res) {
+            submitBtn.disabled = false;
+            if (res.success) {
+              formMsg.style.color = "green";
+              formMsg.textContent = res.message;
+              if (num !== "") {
+                reserved[num] = true;
+                makeGrid();
+              }
+              setTimeout(closeModal, 2000);
+            } else {
+              formMsg.style.color = "red";
+              formMsg.textContent = res.message;
+              refreshReserved();
+            }
+          })
+          .withFailureHandler(function (err) {
+            submitBtn.disabled = false;
+            formMsg.style.color = "red";
+            formMsg.textContent = "Erro: " + (err && err.message);
+          })
+          .reserveNumber(payload);
+      }
+
+      // Atualizar a cada 30s
+      refreshReserved();
+      setInterval(refreshReserved, 30 * 1000);
+    </script>
+  </body>
+</html>
